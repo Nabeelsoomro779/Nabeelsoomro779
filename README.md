@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @Nabeelsoomro779
 - 👀 I’m interested in Data analytics
 - 🌱 I’m currently learning Python and data mining 
-- 📫 How to reach me nabeelsoomro786@gmail.com
+- 📫 How to reach me nabeelsoomro779@gmail.com
 - ⚡ Fun fact: I am a Psychology student as well
 
 <!---
