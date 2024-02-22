@@ -1,9 +1,8 @@
 ---
 title: "Penguins"
-author: "Nas"
+author: "Nabeelsoomro779"
 date: "2024-01-11"
 output:
-  pdf_document: default
   html_document: default
 ---
 # Exploring the Palmer Penguins dataset
