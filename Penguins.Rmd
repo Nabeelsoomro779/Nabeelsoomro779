@@ -1,0 +1,106 @@
+---
+title: "Penguins"
+author: "Nas"
+date: "2024-01-11"
+output:
+  pdf_document: default
+  html_document: default
+---
+# Exploring the Palmer Penguins dataset
+
+## Objectives:
+1. Is there a correlation between flipper length and body mass?
+2. Which penguin species is the largest?
+3. Does sex affect body mass?
+
+
+#### Environment Setup
+###### Loading the following pacakges
+* tidyverse
+* ggplot2
+* palmerpenguins
+* gridExtra
+
+```{r eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(palmerpenguins)
+library(gridExtra)
+```
+
+
+The Penguins Dataset:-
+
+```{r echo = FALSE}
+head(penguins)
+```
+
+# Objective 1:
+## Finding if there is a correlation between mass & flipper length.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+plot1 = ggplot(data = penguins)+
+  geom_point(mapping = aes(x = flipper_length_mm,
+                           y = body_mass_g,
+                           color = species))+
+  labs(title = "Penguins: Body mass Vs. Flipper length",
+       caption = "Data collected by Dr Kristen Gormen")
+```
+
+```{r warning=FALSE, echo=FALSE, message=FALSE, results='hide'}
+plot2 = ggplot(data = penguins)+
+  geom_smooth(mapping = aes(x = flipper_length_mm,
+                            y = body_mass_g))+
+  labs(title = "Positive correlation line")
+```
+
+```{r warning = FALSE, message=FALSE, echo=FALSE}
+grid.arrange(plot1, plot2, ncol = 2, widths = c(1.6, 1))
+```
+
+> Postive correlation between the two variables.
+as one variable changes, so does the other!
+
+
+# Objective 2
+## Finding out which species of penguins is the heaviest.
+
+```{r warning=FALSE, echo=FALSE}
+avg_mass_by_species <- penguins %>% 
+  group_by(species) %>% 
+  summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
+```
+
+```{r warning=FALSE, echo=FALSE}
+ggplot(data = avg_mass_by_species)+
+  geom_col(mapping = aes(x = species,
+                         y = avg_mass,
+                         fill = species, width = 0.6))+
+  labs(title= "Mean mass by species",
+       subtitle = "Gentoo is the largest species in terms of average mass")
+```
+
+
+# Objective 3
+## Does sex play a role on weight?
+
+```{r results='hide', warning=FALSE, message=FALSE, echo=FALSE}
+avg_mass_by_species_and_sex <- penguins %>% 
+  group_by(species, sex) %>% 
+  summarize(avg_mass = mean(body_mass_g, na.rm = TRUE))
+```
+
+```{r echo=FALSE}
+clean <- na.omit(avg_mass_by_species_and_sex)
+```
+
+```{r warning=FALSE, message=FALSE, echo=FALSE}
+ggplot(data = clean)+
+  geom_col(mapping = aes(x = species,
+                         y = avg_mass,
+                         fill = species, width = 0.6))+
+  facet_wrap(~sex)+
+  labs(title = "Mass difference between males & females",
+       subtitle = "Males tend to have more mass than females")
+```
+
